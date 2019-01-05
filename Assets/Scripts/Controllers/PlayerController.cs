@@ -43,7 +43,11 @@ public class PlayerController : MonoBehaviour
     /// <param name="data"></param>
     public void ReadInput(InputData data)
     {
-        if (data.buttons[0]) am.LightAttack();
+        if (data.buttons[0])
+        {
+            if (!am.Attacking) an.SetTrigger("Attack 1");
+            am.LightAttack();
+        }
         if (data.buttons[1]) am.Throw();
         
         // Jump

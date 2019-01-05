@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class AttackManager : MonoBehaviour, IHitboxResponder
 {
+    public bool Attacking = false;
     public Hitbox Hitbox;
     public AttackData AttackData;
 
-    protected bool _attacking = false;
     protected AttackType _atkType = AttackType.Hit;
 
     public enum AttackType { Hit, Throw }
@@ -44,7 +44,7 @@ public class AttackManager : MonoBehaviour, IHitboxResponder
 
     public void LightAttack()
     {
-        if (!_attacking)
+        if (!Attacking)
         {
             _atkType = AttackType.Hit;
             StopCoroutine(DoLightAttack());
@@ -53,7 +53,7 @@ public class AttackManager : MonoBehaviour, IHitboxResponder
     }
     public void Throw()
     {
-        if (!_attacking)
+        if (!Attacking)
         {
             _atkType = AttackType.Throw;
             StopCoroutine(DoLightAttack());
@@ -65,7 +65,7 @@ public class AttackManager : MonoBehaviour, IHitboxResponder
     protected IEnumerator DoLightAttack()
     {
         // Startup
-        _attacking = true;
+        Attacking = true;
         Hitbox.SetResponder(this);
         yield return new WaitForSeconds(Utility.FramesToSeconds(AttackData.Startup));
 
@@ -78,6 +78,6 @@ public class AttackManager : MonoBehaviour, IHitboxResponder
         yield return new WaitForSeconds(Utility.FramesToSeconds(AttackData.Recovery));
 
         // End
-        _attacking = false;
+        Attacking = false;
     }
 }
