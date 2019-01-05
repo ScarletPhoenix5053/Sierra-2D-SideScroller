@@ -2,10 +2,12 @@
 
 [RequireComponent(typeof(AttackManager))]
 [RequireComponent(typeof(MotionController))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     public bool IsGrounded { get { return Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y); } }
 
+    private Animator an;
     private AttackManager am;
     private MotionController mc;
     private float jumpLimitSeconds = 0.2f;
@@ -14,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        an = GetComponent<Animator>();
         am = GetComponent<AttackManager>();
         mc = GetComponent<MotionController>();
     }
@@ -23,6 +26,15 @@ public class PlayerController : MonoBehaviour
         mc.ResetVelocity();
 
         if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
+    }
+    private void FixedUpdate()
+    {
+        an.SetBool("Walking", false);
+        if (IsGrounded)
+        {
+            an.SetBool("Jumping", false);
+            Debug.Log("Ground!");
+        }
     }
 
     /// <summary>
@@ -37,19 +49,18 @@ public class PlayerController : MonoBehaviour
         // Jump
         if (data.axes[0] > 0.5 && IsGrounded && jumpLimitTimer <= 0)
         {
-            Debug.Log(IsGrounded);
-
             jumpLimitTimer = jumpLimitSeconds;
             mc.UpdateVelocity(new Vector3(mc.XVel, mc.Motion.JumpHeight, 0));
+            an.SetBool("Jumping", true);
         }
         // Walk
         if (data.axes[1] !=  0)
-        {
-            
+        {            
             mc.UpdateVelocity(
                 new Vector3(
                     data.axes[1] * mc.Motion.Speed,
                     mc.YVel, 0));
+            an.SetBool("Walking", true);
         }
     }
 

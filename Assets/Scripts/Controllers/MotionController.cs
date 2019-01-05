@@ -9,6 +9,7 @@ public class MotionController : MonoBehaviour
     public float XVel = 0f;
     public float YVel = 0f;
     public float ZVel = 0f;
+
     protected const float zeroThreshold = 0.005f;
     protected Rigidbody rb;
     
