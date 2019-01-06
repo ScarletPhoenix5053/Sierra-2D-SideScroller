@@ -36,11 +36,9 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         an.SetBool("Walking", false);
-        Debug.Log("Walk untrue!");
         if (IsGrounded)
         {
             an.SetBool("Jumping", false);
-            Debug.Log("Ground!");
         }
         else
         {
@@ -54,13 +52,40 @@ public class PlayerController : MonoBehaviour
     /// <param name="data"></param>
     public void ReadInput(InputData data)
     {
+        // Light attack button
         if (data.buttons[0])
         {
-            if (!am.Attacking) an.SetTrigger("Attack 1");
-            am.LightAttack();
+            if (am.LightAttack())
+            {
+                switch (am.AtkState)
+                {
+                    case AttackManager.AttackState.Light1:
+                        an.SetTrigger("Attack 1");
+                        break;
+                    case AttackManager.AttackState.Light2:
+                        an.SetTrigger("Attack 2");
+                        break;
+                    case AttackManager.AttackState.Light3:
+                        an.SetTrigger("Attack 3");
+                        break;
+                    default:
+                        throw new Exception("am.LightAttack should set Attack state to Light1, Light2, or Light3. It should not set it to: " + am.AtkState);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Cannot chain from " + am.AtkState);            
+            }
         }
-        if (data.buttons[1]) am.Throw();
-        
+        // Launcher attack button
+        if (data.buttons[1])
+        {
+            if (am.LauncherAttack())
+            {
+                an.SetTrigger("Launcher");
+            }
+        }
+
         // Jump
         if (data.axes[0] > 0.5 && IsGrounded && jumpLimitTimer <= 0)
         {

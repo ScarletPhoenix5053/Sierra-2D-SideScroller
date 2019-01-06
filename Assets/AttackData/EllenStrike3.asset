@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce885065bcf102e44af53c2c4ec135bc, type: 3}
-  m_Name: EllenStrike1
+  m_Name: EllenStrike3
   m_EditorClassIdentifier: 
-  Damage: 300
-  Startup: 2
-  Active: 1
-  Recovery: 32
-  BlockStun: 14
-  HitStun: 30
-  KnockBack: 12
-  KnockUp: 12
+  Damage: 400
+  Startup: 17
+  Active: 4
+  Recovery: 43
+  BlockStun: 32
+  HitStun: 62
+  KnockBack: 6
+  KnockUp: 2

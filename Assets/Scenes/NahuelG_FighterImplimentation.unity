@@ -460,7 +460,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attacking: 0
   Hitbox: {fileID: 1543068840}
-  AttackData: {fileID: 11400000, guid: c43424853a2f9f146a4d0fa50e052bb3, type: 2}
+  Attacks:
+  - {fileID: 11400000, guid: cc6f55b80da065647880914580a0fb1f, type: 2}
+  - {fileID: 11400000, guid: 58ca36399c0be4f4c9bc39a46433399a, type: 2}
+  - {fileID: 11400000, guid: c34efd40690b91340af53123c86dc3ed, type: 2}
+  - {fileID: 11400000, guid: 65366496546be39439a572940827e3d9, type: 2}
+  AtkState: 0
 --- !u!4 &973680944
 Transform:
   m_ObjectHideFlags: 0
@@ -489,7 +494,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a5674d01884853d4e8f2386a171e14d9, type: 3}
   m_Controller: {fileID: 9100000, guid: 2f45cff4563bbcf49b903373bd35c0c3, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

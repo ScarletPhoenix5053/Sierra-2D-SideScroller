@@ -29,7 +29,6 @@ public class Health : MonoBehaviour
 
         if (mc != null)
         {
-            Debug.Log("knockback!");
             mc.UpdateVelocity(new Vector3(data.KnockBack, data.KnockUp, 0));
         }
     }

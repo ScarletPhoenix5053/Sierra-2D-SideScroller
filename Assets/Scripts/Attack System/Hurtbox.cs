@@ -45,7 +45,6 @@ namespace Tutorial.NahuelG_Fighter
             if (_state != State.Inactive &&
                 _state != State.Blocking)
             {
-                Debug.Log("Hit!");
                 StopCoroutine("HitStun");
                 StartCoroutine(HitStun(hitStunFrames));
                 return true;
