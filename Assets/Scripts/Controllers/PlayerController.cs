@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 [RequireComponent(typeof(AttackManager))]
 [RequireComponent(typeof(MotionController))]
@@ -12,6 +13,11 @@ public class PlayerController : MonoBehaviour
     private MotionController mc;
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0; 
+
+    private enum AttackState
+    {
+
+    }
     
 
     private void Awake()
@@ -30,10 +36,15 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         an.SetBool("Walking", false);
+        Debug.Log("Walk untrue!");
         if (IsGrounded)
         {
             an.SetBool("Jumping", false);
             Debug.Log("Ground!");
+        }
+        else
+        {
+            an.SetBool("Jumping", true);
         }
     }
 
@@ -43,7 +54,11 @@ public class PlayerController : MonoBehaviour
     /// <param name="data"></param>
     public void ReadInput(InputData data)
     {
-        if (data.buttons[0]) am.LightAttack();
+        if (data.buttons[0])
+        {
+            if (!am.Attacking) an.SetTrigger("Attack 1");
+            am.LightAttack();
+        }
         if (data.buttons[1]) am.Throw();
         
         // Jump
@@ -61,6 +76,9 @@ public class PlayerController : MonoBehaviour
                     data.axes[1] * mc.Motion.Speed,
                     mc.YVel, 0));
             an.SetBool("Walking", true);
+
+            // Works fine when not flipping character around. will need to update later!
+            an.SetInteger("Direction", Convert.ToInt32(data.axes[1]));
         }
     }
 
